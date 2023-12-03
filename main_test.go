@@ -1,4 +1,4 @@
-package main
+package jsontomd
 
 import (
 	"encoding/json"
@@ -95,7 +95,7 @@ func Test_decode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := decodeArray(tt.args.decoder)
+			got, err := DecodeArray(tt.args.decoder)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("decode() error = %v, wantErr %v", err, tt.wantErr)
 				return

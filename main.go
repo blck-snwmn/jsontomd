@@ -1,4 +1,4 @@
-package main
+package jsontomd
 
 import (
 	"encoding/json"
@@ -29,18 +29,18 @@ func main() {
 		panic(fmt.Sprintf("failed to open file: %+v", err))
 	}
 	decoder := json.NewDecoder(file)
-	array, err := decodeArray(decoder)
+	array, err := DecodeArray(decoder)
 	if err != nil {
 		panic(fmt.Sprintf("failed to decode: %+v", err))
 	}
-	md, err := encodeMarkdown(array)
+	md, err := EncodeMarkdown(array)
 	if err != nil {
 		panic(fmt.Sprintf("failed to encode: %+v", err))
 	}
 	fmt.Println(md)
 }
 
-func encodeMarkdown(j jsonArray) (string, error) {
+func EncodeMarkdown(j jsonArray) (string, error) {
 	header, err := encodeMarkdownHeader(j)
 	if err != nil {
 		return "", xerrors.Errorf("failed to encode header: %w", err)
@@ -80,7 +80,7 @@ func encodeMarkdownBody(j jsonArray) string {
 	return builder.String()
 }
 
-func decodeArray(decoder *json.Decoder) (jsonArray, error) {
+func DecodeArray(decoder *json.Decoder) (jsonArray, error) {
 	t, err := decoder.Token()
 	if err != nil {
 		return nil, xerrors.Errorf("failed to get token: %w", err)
